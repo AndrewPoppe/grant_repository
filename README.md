@@ -1,7 +1,6 @@
-# grant_repository
-Vanderbilt Grant Repository
+# Yale University Funded Grant Database
 
-Requires two REDCap projects, with project-ids configurable in base.php. Data dictionaries for two REDCap projects exist in the data_dictionary/ directory. This directory should be placed in REDCap's plugins/ directory. (We have not yet converted this to an External Module.)
+Requires two REDCap projects, with project-ids configurable in config.php. Data dictionaries for two REDCap projects exist in the data_dictionary/ directory. This directory should be placed in REDCap's plugins/ directory. (We have not yet converted this to an External Module.)
 
 README.docx is present only for historical purposes. It is not up-to-date and describes an older version of the system.
 
