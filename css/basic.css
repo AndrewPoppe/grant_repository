@@ -1,0 +1,4 @@
+body { font-family: 'Avenir Next Regular', Arial, Helvetica, sans-serif; }
+td { font-family: 'Adobe Caslon Pro', 'Avenir Next LT Pro', 'Times New Roman', Times, serif; }
+table { border-collapse: collapse; }
+table.dataTable tbody tr.even { background-color: #f2f2f2; } 

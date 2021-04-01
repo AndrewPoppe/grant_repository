@@ -7,6 +7,10 @@ if (!isset($_COOKIE['grant_repo'])) {
 
 require_once("base.php");
 
+# update user role
+$role = updateRole($userid);
+
+
 $awards = array(
 		"k_awards" => "K Awards",
 		"r_awards" => "R Awards",
@@ -112,16 +116,11 @@ else
 
 <html>
 	<head>
-		<title>The Grant Repository from Edge for Scholars</title> 
+		<title>The Yale University Funded Grant Database</title> 
+		<link rel="stylesheet" type="text/css" href="css/basic.css">
 		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-        	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-		<style>
-			body { font-family: 'Avenir Next Regular', Arial, Helvetica, sans-serif; }
-			td { font-family: 'Adobe Caslon Pro', 'Avenir Next LT Pro', 'Times New Roman', Times, serif; }
-			table { border-collapse: collapse; }
-			table.dataTable tbody tr.even { background-color: #f2f2f2; } 
-		</style>
 	</head>
 	<body>
 		<br/>
@@ -131,23 +130,11 @@ else
 			$('#grantsTable').DataTable({ "pageLength": 1000 });
 		});
 		</script>
-		<div id="container">
+		<div id="container" style="padding-left:8%;  padding-right:10%; margin-left:auto; margin-right:auto; ">
 			<div id="header">
-				<img src="img/efs_small.png" style="vertical-align:middle"/>
-				<hr>
-				<a href="grants.php">Grants</a> | 
-				<?php
-				if ($_COOKIE['grant_repo'] != 1) {
-					echo '<a href="statistics.php">Use Statistics</a> | ';
-				}
-				if ($_COOKIE['grant_repo'] == 3) {
-					echo "<a href='".APP_PATH_WEBROOT."index.php?pid=$grantsProjectId' target='_blank'>Register Grants</a> | ";
-					echo "<a href='".APP_PATH_WEBROOT."index.php?pid=$userProjectId' target='_blank'>Administer Users</a> | ";
-				} ?>
-				<a href ="http://projectreporter.nih.gov/reporter.cfm">NIH RePORTER</a> | 
-				<a href ="http://grants.nih.gov/grants/oer.htm">NIH-OER</a>
-				<h3>Edge for Scholars Funded Grant Repository</h3>
-				<i>You may download grant documents by clicking "download" links below. The use of the grants document repository is strictly limited to authorized individuals and you are not permitted to share files or any embedded content with other individuals. All file downloads are logged.</i>
+				<?php createHeaderAndTaskBar($role);?>
+				<h3>Yale University Funded Grant Database</h3>
+				<i>You may download grant documents by clicking "download" links below. The use of the grants document database is strictly limited to authorized individuals and you are not permitted to share files or any embedded content with other individuals. All file downloads are logged.</i>
 				<hr/>
 			</div>
 

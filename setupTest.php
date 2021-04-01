@@ -1,10 +1,11 @@
 <?php
 
-$token = "46ECFF7A6EA9E8BD20774BD98CEEFF87";
+require_once("base.php");
+
 $numRecordsInTest = 50;
 
 $data = array(
-	'token' => $token,
+	'token' => $apiToken,
 	'content' => 'record',
 	'format' => 'json',
 	'type' => 'flat',
@@ -18,7 +19,7 @@ $data = array(
 	'returnFormat' => 'json'
 );
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://redcap.vanderbilt.edu/api/');
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -43,13 +44,13 @@ if (count($records) > 0) {
 	}
 
 	$data = array(
-		'token' => $token,
+		'token' => $apiToken,
 		'action' => 'delete',
 		'content' => 'record',
 		'records' => $records
 	);
 	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, 'https://redcap.vanderbilt.edu/api/');
+	curl_setopt($ch, CURLOPT_URL, $apiUrl);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_VERBOSE, 0);

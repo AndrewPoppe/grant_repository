@@ -17,13 +17,13 @@ while ($line = fgetcsv($fp)) {
 fclose($fp);
 
 $data = array(
-	'token' => '89E246CC671A93F9ECC3180B1EFACE76',
+	'token' => $apiToken,
 	'content' => 'metadata',
 	'format' => 'json',
 	'returnFormat' => 'json'
 );
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://redcap.vanderbilt.edu/api/');
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -39,7 +39,7 @@ $metadata = json_decode($output, true);
 $choices = getChoices($metadata);
 
 $data = array(
-	'token' => '89E246CC671A93F9ECC3180B1EFACE76',
+	'token' => $apiToken,
 	'content' => 'record',
 	'format' => 'json',
 	'type' => 'flat',
@@ -52,7 +52,7 @@ $data = array(
 	'returnFormat' => 'json'
 );
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://redcap.vanderbilt.edu/api/');
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -153,7 +153,7 @@ foreach ($lines as $line) {
 echo count($upload)." rows\n";
 
 $data = array(
-	'token' => '89E246CC671A93F9ECC3180B1EFACE76',
+	'token' => $apiToken,
 	'content' => 'record',
 	'format' => 'json',
 	'type' => 'flat',
@@ -164,7 +164,7 @@ $data = array(
 	'returnFormat' => 'json'
 );
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://redcap.vanderbilt.edu/api/');
+curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_VERBOSE, 0);

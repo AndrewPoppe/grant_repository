@@ -1,5 +1,5 @@
 <?php
-/** Author: Jon Scherdin */
+/** Authors: Jon Scherdin, Andrew Poppe */
 # verify user access
 if (!isset($_COOKIE['grant_repo'])) {
 	header("Location: index.php");
@@ -17,6 +17,10 @@ if (!file_exists($filename)) {
 }
 
 require_once(dirname(__FILE__)."/vendor/autoload.php");
+
+// THIS SHORTS THE REST OF THE FILE AS IT'S NOT WORKING WELL
+// JUST DOWNLOAD THE ORIGINAL FILE
+displayFile($filename);
 
 $phpOfficeObj = NULL;
 $pdfOut = $filename."_pdf.pdf"; 
@@ -56,8 +60,10 @@ if (preg_match("/\.doc$/i", $filename) || preg_match("/\.docx$/i", $filename)) {
 }
 
 if (file_exists($pdfOut)) {
-	$readonlyPdf = APP_PATH_TEMP.time()."_".rand(0, 1000000).".pdf";
-	convertToImagePdf($pdfOut, $readonlyPdf);
+	//$readonlyPdf = APP_PATH_TEMP.time()."_".rand(0, 1000000).".pdf";
+	//convertToImagePdf($pdfOut, $readonlyPdf);
+	
+	$readonlyPdf = $pdfOut;
 
 	header('Content-Type: application/pdf');
 	header('Content-Disposition: inline; filename="'.basename($filename).'"');
@@ -102,3 +108,4 @@ function setupSpreadsheet(&$spreadsheet) {
 	$spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.5);
 	$spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.5);
 }
+

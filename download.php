@@ -1,11 +1,18 @@
 <?php
-/** Author: Jon Scherdin */
+/** Authors: Jon Scherdin, Andrew Poppe */
 # verify user access
 if (!isset($_COOKIE['grant_repo'])) {
 	header("Location: index.php");
 }
 
 require_once("base.php");
+
+// grant record id for logging purposes
+if (!isset($_GET['record'])) die('No Grant Identified');
+$grant = $_GET['record'];
+
+// log this download (accessing this page counts)
+\REDCap::logEvent("Download uploaded document", NULL, NULL, $grant, NULL, $grantsProjectId);
 
 // If ID is not in query_string, then return error
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) exit("{$lang['global_01']}!");
@@ -14,6 +21,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) exit("{$lang['global_01']}!
 if (!isset($_GET['p']) || !is_numeric($_GET['p'])) exit("{$lang['global_01']}!");
 $project_id = $_GET['p'];
 define("PROJECT_ID", $project_id);
+
 
 //Download file from the "edocs" web server directory
 $sql = "select * from redcap_edocs_metadata where project_id = $project_id and doc_id = ".$_GET['id'];
@@ -50,17 +58,6 @@ if (preg_match("/\.zip$/i", $this_file['stored_name']) || ($this_file['mime_type
 	$files = array($outDir.$this_file['doc_name']);
 }
 
-if (!empty($files)) {
-	echo "<h1>All Files (".count($files).")</h1>\n";
-	foreach ($files as $filename) {
-		$truncFilename = truncateFile($filename);
-		echo "<p><a href='downloadFile.php?f=".urlencode($truncFilename)."'>".basename($filename)."</a></p>\n";
-	}
-	exit();
-} else {
-	echo "<p>No files have been provided.</p>";
-}
-
 function truncateFile($filename) {
 	return str_replace(APP_PATH_TEMP, "", $filename);
 }
@@ -81,3 +78,31 @@ function inspectDir($dir) {
 	}
 	return $files;
 }
+
+$role = updateRole($userid);
+?>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/basic.css">
+	</head>
+	<br/>
+	<div id="container" style="padding-left:8%;  padding-right:10%; margin-left:auto; margin-right:auto; ">
+		<div id="header">
+		<?php createHeaderAndTaskBar($role);?>
+		<h3>Download Grant Documents</h3>
+		<i></i><hr/>
+	</div>
+	<div id="downloads">
+	<?php
+		if (!empty($files)) {
+			echo "<h1>All Files (".count($files).")</h1>\n";
+			foreach ($files as $filename) {
+				$truncFilename = truncateFile($filename);
+				echo "<p><a href='downloadFile.php?f=".urlencode($truncFilename)."'>".basename($filename)."</a></p>\n";
+			}
+			exit();
+		} else {
+			echo "<p>No files have been provided.</p>";
+		}
+	?>
+</html>
